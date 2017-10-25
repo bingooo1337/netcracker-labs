@@ -1,9 +1,11 @@
 package lab1.sorters;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 abstract public class Sort {
-    abstract public void sort(List array);
+    abstract public int[] sort(int[] array);
+
+    public static void swap(int[] array, int from, int to) {
+        int temp = array[from];
+        array[from] = array[to];
+        array[to] = temp;
+    }
 }

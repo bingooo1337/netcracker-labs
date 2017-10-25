@@ -1,4 +1,6 @@
 package lab1.fillers;
+import lab1.sorters.Sort;
+
 import java.util.Random;
 
 public class Filler {
@@ -30,10 +32,12 @@ public class Filler {
     public static int[] reverseSortedArray(int n) {
         int[] array = sortedArray(n);
 
+//        int temp;
         for (int i = 0, j = n - 1; i < j; i++, j--) {
-            int temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
+            Sort.swap(array, i, j);
+//            temp = array[i];
+//            array[i] = array[j];
+//            array[j] = temp;
         }
 
         return array;
