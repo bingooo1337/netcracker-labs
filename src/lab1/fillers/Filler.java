@@ -1,56 +1,85 @@
 package lab1.fillers;
-import lab1.sorters.Sort;
 
 import java.util.Random;
 
 public class Filler {
 
-    //return sorted array of n int values in ascending order
-    public static int[] sortedArray(int n) {
-        int[] array = new int[n];
-        Random random = new Random();
-        array[0] = random.nextInt(n) + 1;
+    public static int[] sortedArray(int size, int minValue, int maxValue) {
+        if (size < 1)
+            return null;
 
-        for (int i = 1; i < n; i++) {
-            array[i] = array[i - 1] + random.nextInt(n) + 1;
+        if (maxValue - minValue <= 0) {
+            int[] array = new int[size];
+            for (int element : array) {
+                element = minValue;
+            }
+            return array;
+        }
+
+        int[] array = new int[size];
+
+        Random random = new Random();
+        array[0] = random.nextInt(Math.round((maxValue - minValue) / size) + 1) + minValue + 1;
+
+        for (int i = 1; i < size; i++) {
+            array[i] = array[i - 1] + random.nextInt(Math.round((maxValue - array[i - 1]) / (size - i)) + 1);
         }
 
         return array;
     }
 
-    //return sorted array of n int values in ascending order with random element in the end
-    public static int[] sortedArrayWithRandomEnd(int n) {
-        int[] array = sortedArray(n);
-        Random random = new Random();
-//        array[n - 1] = random.nextInt(Arrays.stream(array).max().getAsInt()) + 1;
-        array[n - 1] = random.nextInt(n * n) + 1;
+    public static int[] sortedArrayWithRandomEnd(int size, int minValue, int maxValue) {
+        int[] array = sortedArray(size, minValue, maxValue);
+
+        if (array == null)
+            return null;
+
+        if (maxValue - minValue <= 0)
+            return array;
+
+        array[size - 1] = new Random().nextInt(maxValue - minValue) + minValue + 1;
 
         return array;
     }
 
-    //return sorted array of n int values in descending order
-    public static int[] reverseSortedArray(int n) {
-        int[] array = sortedArray(n);
+    public static int[] reverseSortedArray(int size, int minValue, int maxValue) {
+        int[] array = sortedArray(size, minValue, maxValue);
 
-//        int temp;
-        for (int i = 0, j = n - 1; i < j; i++, j--) {
-            Sort.swap(array, i, j);
-//            temp = array[i];
-//            array[i] = array[j];
-//            array[j] = temp;
+        if (array == null)
+            return null;
+
+        if (maxValue - minValue <= 0)
+            return array;
+
+        int temp;
+        for (int i = 0, j = size - 1; i < j; i++, j--) {
+            temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
         }
 
         return array;
     }
 
-    //return array of n int random values
-    public static int[] randomArray(int n) {
-        int[] array = new int[n];
+    public static int[] randomArray(int size, int minValue, int maxValue) {
+        if (size < 1)
+            return null;
+
+        if (maxValue - minValue <= 0) {
+            int[] array = new int[size];
+            for (int element : array) {
+                element = minValue;
+            }
+            return array;
+        }
+
+        int[] array = new int[size];
+
         Random random = new Random();
 
-        int maxValue = n * n;
-        for (int i = 0; i < n; i++) {
-            array[i] = random.nextInt(maxValue) + 1;
+        int randomRange = maxValue - minValue + 1;
+        for (int i = 0; i < size; i++) {
+            array[i] = minValue + random.nextInt(randomRange);
         }
 
         return array;

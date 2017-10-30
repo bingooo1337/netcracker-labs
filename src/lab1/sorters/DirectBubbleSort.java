@@ -2,7 +2,7 @@ package lab1.sorters;
 
 import java.util.Arrays;
 
-abstract public class BubbleSort extends Sort {
+public class DirectBubbleSort extends BubbleSort{
 
     @Override
     public int[] sort(int[] array) {
