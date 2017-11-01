@@ -4,14 +4,15 @@ import java.util.Random;
 
 public class Filler {
 
+    @FillerMethod
     public static int[] sortedArray(int size, int minValue, int maxValue) {
         if (size < 1)
             return null;
 
         if (maxValue - minValue <= 0) {
             int[] array = new int[size];
-            for (int element : array) {
-                element = minValue;
+            for (int i = 0; i < size ; i++) {
+                array[i] = minValue;
             }
             return array;
         }
@@ -28,6 +29,7 @@ public class Filler {
         return array;
     }
 
+    @FillerMethod
     public static int[] sortedArrayWithRandomEnd(int size, int minValue, int maxValue) {
         int[] array = sortedArray(size, minValue, maxValue);
 
@@ -42,6 +44,7 @@ public class Filler {
         return array;
     }
 
+    @FillerMethod
     public static int[] reverseSortedArray(int size, int minValue, int maxValue) {
         int[] array = sortedArray(size, minValue, maxValue);
 
@@ -61,14 +64,15 @@ public class Filler {
         return array;
     }
 
+    @FillerMethod
     public static int[] randomArray(int size, int minValue, int maxValue) {
         if (size < 1)
             return null;
 
         if (maxValue - minValue <= 0) {
             int[] array = new int[size];
-            for (int element : array) {
-                element = minValue;
+            for (int i = 0; i < size ; i++) {
+                array[i] = minValue;
             }
             return array;
         }
