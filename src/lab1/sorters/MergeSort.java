@@ -19,8 +19,7 @@ public class MergeSort extends Sort {
                 two_size = (shift + n * 2 > len) ? (len - (shift + n)) : n;
                 arr2 = merge(Arrays.copyOfRange(result, shift, shift + n),
                         Arrays.copyOfRange(result, shift + n, shift + n + two_size));
-                for (int i = 0; i < n + two_size; ++i)
-                    result[shift + i] = arr2[i];
+                System.arraycopy(arr2, 0, result, shift, n + two_size);
                 shift += n * 2;
             }
             n *= 2;
@@ -33,7 +32,7 @@ public class MergeSort extends Sort {
      * @param array2 Buffer array with size equal array1.size
      * @return Sorted array
      */
-    public static int[] merge(int[] array1, int array2[]) {
+    protected static int[] merge(int[] array1, int array2[]) {
         int n = array1.length + array2.length;
         int[] array = new int[n];
         int i1 = 0;

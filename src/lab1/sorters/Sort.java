@@ -1,5 +1,7 @@
 package lab1.sorters;
 
+import java.util.ArrayList;
+
 /**
  * @author Kamyshanov Volodymyr bingooo1337@gmail.com
  */
@@ -19,5 +21,33 @@ abstract public class Sort {
         int temp = array[from];
         array[from] = array[to];
         array[to] = temp;
+    }
+
+    @Override
+    public String toString() {
+        String name = this.getClass().getSimpleName();
+        ArrayList<String> words = new ArrayList<>();
+        int i = 0;
+        while (name.length() > 1) {
+            if (Character.isUpperCase(name.charAt(i))) {
+                i++;
+                while (!Character.isUpperCase(name.charAt(i))) {
+                    if (i == name.length() - 1) {
+                        i++;
+                        break;
+                    }
+                    i++;
+                }
+                words.add(name.substring(0, i));
+                name = name.substring(i);
+                if (name.length() < 1)
+                    break;
+                i = 0;
+            }
+        }
+        for (String word : words) {
+            name += word + " ";
+        }
+        return name;
     }
 }

@@ -1,21 +1,72 @@
 package lab1.sorters;
 
-import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public class BubbleReverseSort extends BubbleSort {
 
     @Override
-    public int[] sort(int[] array) {
-        int[] result = Arrays.copyOf(array, array.length);
-        int n = result.length - 1;
-
-        for (int i = n; i >= 0; i--) {
-            for (int j = n - 1; j >= n - i; j--) {
-                if (result[j + 1] < result[j]) {
-                    swap(result, j + 1, j);
-                }
+    protected OuterIterator getOuterLoopIterator(int[] array) {
+        return new OuterIterator(array) {
+            @Override
+            public boolean hasNext() {
+                return current >= 0;
             }
-        }
-        return result;
+
+            @Override
+            public Integer next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return values[current--];
+            }
+
+            @Override
+            void initializeCurrent() {
+                current = values.length - 1;
+            }
+        };
+    }
+
+    @Override
+    protected InnerIterator getInnerLoopIterator(int[] array, int outerIteratorStage) {
+        return new InnerIterator(array, outerIteratorStage) {
+            @Override
+            int getPrevious() {
+                return values[current + 1];
+            }
+
+            @Override
+            int getCurrent() {
+                return values[current];
+            }
+
+            @Override
+            int getPreviousIndex() {
+                return current + 1;
+            }
+
+            @Override
+            public boolean hasNext() {
+                return current >= values.length - 1 - outerIteratorStage;
+            }
+
+            @Override
+            public Integer next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return values[current--];
+            }
+
+            @Override
+            void initializeCurrent() {
+                current = values.length - 2;
+            }
+        };
+    }
+
+    @Override
+    protected boolean needToSwap(int current, int previous) {
+        return current > previous;
     }
 }
