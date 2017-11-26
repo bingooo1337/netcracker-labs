@@ -1,7 +1,7 @@
-package lab1.analyzer;
+package analyzer;
 
-import lab1.reflection.SortFinder;
-import lab1.sorters.Sort;
+import reflection.SortFinder;
+import sorters.Sort;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -33,7 +33,7 @@ public class Analyzer {
      * @param argumentsLists A two-dimensional array where each line contains different arguments for fillers.<br>
      *                       Each line contains 3 int values: the first - the number of elements in the array,<br>
      *                       the second and the third - the minimum and maximum values.
-     * @return map with with statistics. Each key is the name of the filler. Each value is two-dimensional array of results.<br>
+     * @return map with statistics. Each key is the name of the filler. Each value is two-dimensional array of results.<br>
      * In it, the first line is a header. In each next line, the name of the sort method and the results of the<br>
      * sorting time on different arrays.
      */
@@ -52,11 +52,10 @@ public class Analyzer {
 
             sorters.forEach(sorter -> {
                 ArrayList<String> sorterResult = new ArrayList<>();
-//                sorterResult.add(sorter.getSimpleName());
 
                 try {
                     Sort sorterInstance = sorter.newInstance();
-                    sorterResult.add(sorterInstance.toString());
+                    sorterResult.add(sorterInstance.getClassName());
                     arrays.forEach(array -> {
                         long startTime = System.nanoTime();
                         sorterInstance.sort(array);
@@ -75,10 +74,13 @@ public class Analyzer {
     }
 
     /**
+     * @param sortFinder Instance of the SortFinder class for searching fillers.
      * @param argumentsLists A two-dimensional array where each line contains different arguments for fillers.<br>
      *                       Each line contains 3 int values: the first - the number of elements in the array,<br>
      *                       the second and the third - the minimum and maximum values.
      * @return map with filler names (key) and ArrayList of generated arrays by this filler (value).
+     * @see SortFinder
+     * @see fillers.Filler
      */
     private Map<String, ArrayList<int[]>> generateArraysByFillers(SortFinder sortFinder, Object[][] argumentsLists) {
         Set<Method> methods = sortFinder.findFillers();

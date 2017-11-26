@@ -1,21 +1,22 @@
-package lab1.sorters;
+package sorters;
 
 import java.util.ArrayList;
 
 /**
+ * Abstract class for sorting arrays of int values.
  * @author Kamyshanov Volodymyr bingooo1337@gmail.com
  */
 abstract public class Sort {
     /**
-     * @param array Array for sorting
-     * @return      Return sorted array
+     * @param array Array of ints for sorting
+     * @return sorted array
      */
     abstract public int[] sort(int[] array);
 
     /**
-     * @param array Array in which need to swap two values
-     * @param from  Index of the first value that need to swap with the second value
-     * @param to    Index of the second value that need to swap with the first value
+     * @param array Array in which need to swap two elements
+     * @param from  Index of the first element that need to swap with the second element
+     * @param to    Index of the second element that need to swap with the first element
      */
     protected static void swap(int[] array, int from, int to) {
         int temp = array[from];
@@ -23,8 +24,13 @@ abstract public class Sort {
         array[to] = temp;
     }
 
-    @Override
-    public String toString() {
+
+    /**
+     * Method that take name of the class and update it with <br>
+     * spaces between words.
+     * @return name of the class with spaces between words.
+     */
+    public String getClassName() {
         String name = this.getClass().getSimpleName();
         ArrayList<String> words = new ArrayList<>();
         int i = 0;

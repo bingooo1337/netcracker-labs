@@ -1,7 +1,12 @@
-package lab1.sorters;
+package sorters;
 
 import java.util.Arrays;
 
+/**
+ * Class for sorting arrays of ints using the merge sort method with recursion.
+ * @author Kamyshanov Volodymyr bingooo1337@gmail.com
+ * @see MergeSort
+ */
 public class RecursiveMergeSort extends MergeSort {
 
     @Override

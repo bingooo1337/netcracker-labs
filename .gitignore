@@ -1,3 +1,4 @@
 .idea/
+.gitignore
 netcracker-labs.iml
-out/
+target/

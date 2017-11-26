@@ -1,7 +1,12 @@
-package lab1.sorters;
+package sorters;
 
 import java.util.Arrays;
 
+/**
+ * Class for sorting arrays of ints using the insertion sort method.
+ * @author Kamyshanov Volodymyr bingooo1337@gmail.com
+ * @see Sort
+ */
 public class InsertionSort extends Sort {
 
     @Override

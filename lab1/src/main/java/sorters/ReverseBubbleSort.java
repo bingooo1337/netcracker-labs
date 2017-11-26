@@ -1,15 +1,19 @@
-package lab1.sorters;
+package sorters;
 
 import java.util.NoSuchElementException;
 
-public class DirectBubbleSort extends BubbleSort {
+/**
+ * Class for sorting arrays of ints using the bubble sort method with a reverse passage through the array.
+ * @author Kamyshanov Volodymyr bingooo1337@gmail.com
+ */
+public class ReverseBubbleSort extends BubbleSort {
 
     @Override
     protected OuterIterator getOuterLoopIterator(int[] array) {
         return new OuterIterator(array) {
             @Override
             public boolean hasNext() {
-                return current < values.length;
+                return current >= 0;
             }
 
             @Override
@@ -17,12 +21,12 @@ public class DirectBubbleSort extends BubbleSort {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return values[current++];
+                return values[current--];
             }
 
             @Override
             void initializeCurrent() {
-                current = 0;
+                current = values.length - 1;
             }
         };
     }
@@ -32,7 +36,7 @@ public class DirectBubbleSort extends BubbleSort {
         return new InnerIterator(array, outerIteratorStage) {
             @Override
             int getPrevious() {
-                return values[current - 1];
+                return values[current + 1];
             }
 
             @Override
@@ -42,12 +46,12 @@ public class DirectBubbleSort extends BubbleSort {
 
             @Override
             int getPreviousIndex() {
-                return current - 1;
+                return current + 1;
             }
 
             @Override
             public boolean hasNext() {
-                return current < values.length - outerIteratorStage;
+                return current >= values.length - 1 - outerIteratorStage;
             }
 
             @Override
@@ -55,19 +59,18 @@ public class DirectBubbleSort extends BubbleSort {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return values[current++];
+                return values[current--];
             }
 
             @Override
             void initializeCurrent() {
-                current = 1;
+                current = values.length - 2;
             }
         };
     }
 
     @Override
     protected boolean needToSwap(int current, int previous) {
-        return current < previous;
+        return current > previous;
     }
-
 }
