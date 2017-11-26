@@ -1,6 +1,4 @@
 .idea/
 .gitignore
-netcracker-labs.iml
-src/
 lab1/target/
-lab1/lab1.iml
+lab1/src/main/resources/
