@@ -2,3 +2,9 @@
 .gitignore
 lab1/target/
 lab1/src/main/resources/
+lab1/lab1_task.pdf
+lab2/lab2_task.pdf
+lab2/ojdbc8.jar
+lab2/src/main/resources/
+lab2/src/test/
+lab2/target/
