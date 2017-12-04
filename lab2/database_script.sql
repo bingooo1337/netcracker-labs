@@ -32,6 +32,12 @@ CREATE TABLE Params (
   object_id    INTEGER       NOT NULL
 );
 
+CREATE TABLE References (
+  attr_id        INTEGER NOT NULL,
+  from_object_id INTEGER NOT NULL,
+  to_object_id   INTEGER NOT NULL
+);
+
 ALTER TABLE Objects
   ADD ( FOREIGN KEY (object_type_id)
 REFERENCES Object_types );
@@ -46,4 +52,16 @@ REFERENCES Objects );
 
 ALTER TABLE Params
   ADD ( FOREIGN KEY (attr_id)
+REFERENCES Attributes );
+
+ALTER TABLE References
+  ADD ( FOREIGN KEY (from_object_id)
+REFERENCES Objects );
+
+ALTER TABLE References
+  ADD ( FOREIGN KEY (to_object_id)
+REFERENCES Objects );
+
+ALTER TABLE References
+  ADD ( FOREIGN KEY (ATTR_ID)
 REFERENCES Attributes );

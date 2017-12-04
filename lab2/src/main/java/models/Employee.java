@@ -1,12 +1,16 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Employee extends Model {
+    //TODO IMPLEMENT PARENT ID
     private String firstName;
     private String lastName;
     private String position;
-    private Department[] departments;
+    private ArrayList<Department> departments;
     private Employee manager;
     private Integer salary;
     private Integer age;
@@ -18,7 +22,7 @@ public class Employee extends Model {
         super(id);
     }
 
-    public Employee(String firstName, String lastName, String position, Department[] departments, Employee managerId, int salary, int age) {
+    public Employee(String firstName, String lastName, String position, ArrayList<Department> departments, Employee managerId, int salary, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;
@@ -28,7 +32,7 @@ public class Employee extends Model {
         this.age = age;
     }
 
-    public Employee(long id, String firstName, String lastName, String position, Department[] departments, Employee managerId, int salary, int age) {
+    public Employee(long id, String firstName, String lastName, String position, ArrayList<Department> departments, Employee managerId, int salary, int age) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -63,11 +67,11 @@ public class Employee extends Model {
         this.position = position;
     }
 
-    public Department[] getDepartments() {
+    public ArrayList<Department> getDepartments() {
         return departments;
     }
 
-    public void setDepartments(Department[] departments) {
+    public void setDepartments(ArrayList<Department> departments) {
         this.departments = departments;
     }
 
@@ -98,15 +102,16 @@ public class Employee extends Model {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Employee)) return false;
+        if (!super.equals(o)) return false;
 
         Employee employee = (Employee) o;
 
         if (firstName != null ? !firstName.equals(employee.firstName) : employee.firstName != null) return false;
         if (lastName != null ? !lastName.equals(employee.lastName) : employee.lastName != null) return false;
         if (position != null ? !position.equals(employee.position) : employee.position != null) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(departments, employee.departments)) return false;
+        if (departments != null ? !departments.equals(employee.departments) : employee.departments != null)
+            return false;
         if (manager != null ? !manager.equals(employee.manager) : employee.manager != null) return false;
         if (salary != null ? !salary.equals(employee.salary) : employee.salary != null) return false;
         return age != null ? age.equals(employee.age) : employee.age == null;
@@ -114,10 +119,11 @@ public class Employee extends Model {
 
     @Override
     public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(departments);
+        result = 31 * result + (departments != null ? departments.hashCode() : 0);
         result = 31 * result + (manager != null ? manager.hashCode() : 0);
         result = 31 * result + (salary != null ? salary.hashCode() : 0);
         result = 31 * result + (age != null ? age.hashCode() : 0);
@@ -126,15 +132,24 @@ public class Employee extends Model {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "ID='" + getId() + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", position='" + position + '\'' +
-                ", departmentsIDs=" + Arrays.toString(departments) +
-                ", managerID=" + manager.getId() +
-                ", salary=" + salary +
-                ", age=" + age +
-                '}';
+        String departmentsIds;
+        if (departments.size() > 1) {
+            departmentsIds = "[";
+            departmentsIds += departments.stream()
+                    .map(dep -> String.valueOf(dep.getId()))
+                    .collect(Collectors.joining(", "));
+            departmentsIds += "]";
+        } else departmentsIds = String.valueOf(departments.get(0).getId());
+        String managerID = manager == null ? "null" : String.valueOf(manager.getId());
+        return "Employee {" +
+                "\n\tID = '" + getId() + '\'' +
+                ", \n\tfirstName = '" + firstName + '\'' +
+                ", \n\tlastName = '" + lastName + '\'' +
+                ", \n\tposition = '" + position + '\'' +
+                ", \n\tdepartments = " + departmentsIds +
+                ", \n\tmanagerID = " + managerID +
+                ", \n\tsalary = " + salary +
+                ", \n\tage = " + age +
+                "\n}";
     }
 }

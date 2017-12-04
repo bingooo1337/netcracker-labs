@@ -1,6 +1,7 @@
 package models;
 
 public class Department extends Model {
+    //TODO IMPLEMENT PARENT ID
     private String title;
     private String city;
 
@@ -41,7 +42,8 @@ public class Department extends Model {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Department)) return false;
+        if (!super.equals(o)) return false;
 
         Department that = (Department) o;
 
@@ -51,17 +53,18 @@ public class Department extends Model {
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Department{" +
-                "ID='" + getId() + '\'' +
-                ", title='" + title + '\'' +
-                ", city='" + city + '\'' +
-                '}';
+        return "Department {" +
+                "\n\tID = '" + getId() + '\'' +
+                ", \n\ttitle = '" + title + '\'' +
+                ", \n\tcity = '" + city + '\'' +
+                "\n}";
     }
 }
